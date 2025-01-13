@@ -4,20 +4,20 @@ import matplotlib.pyplot as plt  # only needed for plotting
 import torch
 from mpl_toolkits.axes_grid1 import ImageGrid  # only needed for plotting
 
-DATA_PATH = "data/corruptmnist"
-
+import os
+DATA_PATH = "C:/Users/sebas/dtu_mlops/data/corruptmnist_v1"
 
 def corrupt_mnist() -> tuple[torch.utils.data.Dataset, torch.utils.data.Dataset]:
     """Return train and test dataloaders for corrupt MNIST."""
     train_images, train_target = [], []
     for i in range(6):
-        train_images.append(torch.load(f"{DATA_PATH}/train_images_{i}.pt"))
-        train_target.append(torch.load(f"{DATA_PATH}/train_target_{i}.pt"))
+        train_images.append(torch.load(os.path.join(DATA_PATH, f"train_images_{i}.pt")))
+        train_target.append(torch.load(os.path.join(DATA_PATH, f"train_target_{i}.pt")))
     train_images = torch.cat(train_images)
     train_target = torch.cat(train_target)
 
-    test_images: torch.Tensor = torch.load(f"{DATA_PATH}/test_images.pt")
-    test_target: torch.Tensor = torch.load(f"{DATA_PATH}/test_target.pt")
+    test_images = torch.load(os.path.join(DATA_PATH, "test_images.pt"))
+    test_target = torch.load(os.path.join(DATA_PATH, "test_target.pt"))
 
     train_images = train_images.unsqueeze(1).float()
     test_images = test_images.unsqueeze(1).float()
